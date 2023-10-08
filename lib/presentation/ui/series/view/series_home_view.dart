@@ -37,7 +37,7 @@ class _SeriesHomeViewState extends State<SeriesHomeView> {
   int _selectedNavbarItemIndex = 0;
   int _selectedSliderIndex = -1;
   int _selectedFilterIndex = 0;
-  final int _crossAxisCount = 6;
+  final int _crossAxisCount = 4;
   late List<dynamic> listOfUnderCategories = [];
   late Map<String, List<EpisodeModel>> mapSerieAndEpisode = {};
   bool _showMenuFilter = false;
@@ -154,7 +154,6 @@ class _SeriesHomeViewState extends State<SeriesHomeView> {
               if (snapshot.hasData) {
                 // Use the home data from the snapshot to build the UI
                 final screenData = snapshot.data!;
-
                 return RawKeyboardListener(
                   focusNode: _rawMainFocusNode,
                   onKey: (RawKeyEvent event) {
@@ -229,11 +228,8 @@ class _SeriesHomeViewState extends State<SeriesHomeView> {
                       }
                     }
                   },
-                  child: SafeArea(
-                    top: false,
-                    child: Stack(
-                      children: [
-                        // Background image
+                  child:Stack(
+                    children: [
                         bgImage == AssetsManager.bgSeries
                             ? Image.asset(
                                 bgImage,
@@ -248,102 +244,100 @@ class _SeriesHomeViewState extends State<SeriesHomeView> {
                                 width: double.infinity,
                               ),
                         FilterWidget(
-                          marginVertical: Get.width * .075,
+                          marginVertical:4,
                           marginHorizontal: Get.height * .15,
                           toggleMenu: _toggleMenu,
                           isFocused: _focusedPartScreen == 1,
                           // filterBtnNode: _filterButtonFocusNode,
                         ),
-                        Align(
-                          alignment: Alignment.topCenter,
-                          child: Container(
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(0),
-                              color: Colors.black87.withOpacity(0.5),
-                            ),
-                            margin: EdgeInsets.only(
-                              top: Get.height * .05,
-                              // left: Get.width * .045,
-                            ),
-                            width: Get.width * .85,
-                            height: Get.height * .1,
-                            child: ListView.builder(
-                              controller: _scrollNavbarController,
-                              scrollDirection: Axis.horizontal,
-                              itemCount: _viewModel.navbarList.length,
-                              itemBuilder: (BuildContext context, int index) {
-                                return TextButton(
-                                  focusNode: _navbarItemsFocusNode[
-                                      _selectedNavbarItemIndex],
-                                  onPressed: () {
-                                    final itemClicked =
-                                    _viewModel.navbarList[index];
+                      
+                         Align(
+                            alignment: Alignment.topLeft,
+                            child: Container(
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(0),
+                                color: Colors.black,
+                              ),
+                              width: Get.width * .20,
+                              child: ListView.builder(
+                                controller: _scrollNavbarController,
+                                scrollDirection: Axis.vertical,
+                                itemCount: _viewModel.navbarList.length,
+                                itemBuilder: (BuildContext context, int index) {
+                                  return Padding(
+                                    padding:const EdgeInsets.only(top: 15),
+                                  child: TextButton(
+                                    focusNode: _navbarItemsFocusNode[
+                                        _selectedNavbarItemIndex],
+                                    onPressed: () {
+                                      final itemClicked =
+                                      _viewModel.navbarList[index];
 
-                                    screenData.categoryChoosen =
-                                        itemClicked.name;
+                                      screenData.categoryChoosen =
+                                          itemClicked.name;
 
-                                    Future<dynamic> function;
+                                      Future<dynamic> function;
 
-                                    function = serieService
-                                        .getAllSeries();
+                                      function = serieService
+                                          .getAllSeries();
 
-                                    _viewModel.onNavbarItemClicked(
-                                      index,
-                                      function,
-                                      // widget.nameSlider,
-                                    );
-                                  },
-                                  style: TextButton.styleFrom(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 20),
-                                    backgroundColor: _selectedNavbarItemIndex ==
-                                            index
-                                        ? _focusedPartScreen == 0
-                                            ? ColorManager.selectedNavBarItem
-                                            : ColorManager.selectedNavBarItem
-                                                .withOpacity(0.3)
-                                        : ColorManager.transparent,
-                                    foregroundColor: ColorManager.transparent,
-                                    shape: const RoundedRectangleBorder(
-                                        side: BorderSide.none),
-                                  ),
-                                  child: Text(
-                                    _viewModel.navbarList[index].name,
-                                    style: getBoldStyle(
-                                      color: _selectedNavbarItemIndex == index
+                                      _viewModel.onNavbarItemClicked(
+                                        index,
+                                        function,
+                                        // widget.nameSlider,
+                                      );
+                                    },
+                                    style: TextButton.styleFrom(
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 20),
+                                      backgroundColor: _selectedNavbarItemIndex ==
+                                              index
                                           ? _focusedPartScreen == 0
-                                              ? ColorManager.yellow
-                                              : ColorManager.yellow
-                                                  .withOpacity(0.3)
-                                          : _focusedPartScreen == 0
                                               ? ColorManager.white
                                               : ColorManager.white
-                                                  .withOpacity(0.3),
-                                      fontSize: FontSize.s16,
+                                                  .withOpacity(0.3)
+                                          : ColorManager.transparent,
+                                      foregroundColor: ColorManager.transparent,
+                                      shape: const RoundedRectangleBorder(
+                                          side: BorderSide.none),
                                     ),
-                                  ),
-                                );
-                              },
+                                    child: Text(
+                                      _viewModel.navbarList[index].name,
+                                      style: getBoldStyle(
+                                        color: _selectedNavbarItemIndex == index
+                                            ? _focusedPartScreen == 0
+                                                ? ColorManager.black
+                                                : ColorManager.black
+                                                    .withOpacity(0.3)
+                                            : _focusedPartScreen == 0
+                                                ? ColorManager.white
+                                                : ColorManager.black
+                                                    .withOpacity(0.3),
+                                        fontSize: FontSize.s16,
+                                      ),
+                                    ),
+                                  ));
+                                },
+                              ),
                             ),
                           ),
-                        ),
-                        Align(
-                          alignment: Alignment.bottomCenter,
+                          Align(
+                          alignment: Alignment.topRight,
                           child: Container(
                             margin: EdgeInsets.only(
-                              top: Get.height * .3,
+                              top: Get.height * .2,
                             ),
-                            width: Get.width * .85,
-                            height: Get.height * .8,
+                            width: Get.width * .79,
+                            height: Get.height * .9,
                             child: GridView.builder(
                               controller: _scrollSlidersController,
                               padding: const EdgeInsets.all(8.0),
                               gridDelegate:
                                   SliverGridDelegateWithFixedCrossAxisCount(
                                 crossAxisCount: _crossAxisCount,
-                                childAspectRatio: 0.55,
+                                childAspectRatio: 0.7,
                                 crossAxisSpacing: Get.width * .02,
-                                mainAxisSpacing: Get.height * .05,
+                                mainAxisSpacing: Get.height * .04,
                               ),
                               itemCount: listOfUnderCategories.length,
                               itemBuilder: (BuildContext context, int index) {
@@ -385,7 +379,7 @@ class _SeriesHomeViewState extends State<SeriesHomeView> {
                                           decoration: BoxDecoration(
                                             color: _selectedSliderIndex == index
                                                 ? null
-                                                : ColorManager.lightBlue,
+                                                : ColorManager.black,
                                           ),
                                           height: Get.height * .32,
                                           width: Get.width * 0.3,
@@ -401,36 +395,7 @@ class _SeriesHomeViewState extends State<SeriesHomeView> {
                                                   slider.icon,
                                                   fit: BoxFit.fill,
                                                 ),
-                                              ],
-                                            ),
-                                          ),
-                                        ),
-                                        Expanded(
-                                          child: Stack(
-                                            // crossAxisAlignment: CrossAxisAlignment.start,
-                                            children: [
-                                              SizedBox(
-                                                width: Get.width * 0.12,
-                                                child: Text(
-                                                  slider.name,
-                                                  overflow: TextOverflow.clip,
-                                                  maxLines: 2,
-                                                  style: TextStyle(
-                                                    fontSize: FontSize.s14,
-                                                    color:
-                                                        _selectedSliderIndex ==
-                                                                index
-                                                            ? ColorManager.white
-                                                            : ColorManager
-                                                                .black,
-                                                    fontWeight: FontWeight.bold,
-                                                  ),
-                                                ),
-                                              ),
-                                              if (yearOfMovie.isNotEmpty)
-                                                Align(
-                                                  alignment: Alignment.topRight,
-                                                  child: Container(
+                                                Container(
                                                     decoration: BoxDecoration(
                                                       borderRadius:
                                                           const BorderRadius
@@ -454,7 +419,33 @@ class _SeriesHomeViewState extends State<SeriesHomeView> {
                                                       ),
                                                     ),
                                                   ),
+                                              ],
+                                            ),
+                                          ),
+                                        ),
+                                        Expanded(
+                                          child: Stack(
+                                            alignment: Alignment.center,
+                                            children: [
+                                              SizedBox(
+                                                child: Text(
+                                                  slider.name,
+                                                  overflow: TextOverflow.clip,
+                                                  maxLines: 1,
+                                                  style: TextStyle(
+                                                    fontSize: FontSize.s14,
+                                                    color:
+                                                        _selectedSliderIndex ==
+                                                                index
+                                                            ? ColorManager.white
+                                                            : ColorManager
+                                                                .black,
+                                                    fontWeight: FontWeight.bold,
+                                                  ),
                                                 ),
+                                              ),
+                                            
+                                                
                                             ],
                                           ),
                                         ),
@@ -466,15 +457,14 @@ class _SeriesHomeViewState extends State<SeriesHomeView> {
                             ),
                           ),
                         ),
-
-                        Align(
+                          Align(
                           alignment: Alignment.topRight,
                           child: Visibility(
                             visible: _showMenuFilter,
                             child: Container(
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(0),
-                                color: ColorManager.grey1,
+                                color: ColorManager.black,
                               ),
                               width: Get.width * .3,
                               height: Get.height,
@@ -639,7 +629,7 @@ class _SeriesHomeViewState extends State<SeriesHomeView> {
                                                   ? ColorManager
                                                       .selectedNavBarItem
                                                   : ColorManager.white,
-                                              width: Get.width,
+                                              width: Get.width*0.2,
                                               height: Get.height * .1,
                                               child: Center(
                                                 child: Text(
@@ -664,9 +654,9 @@ class _SeriesHomeViewState extends State<SeriesHomeView> {
                             ),
                           ),
                         ),
-                      ],
-                    ),
-                  ),
+                    ],
+                  )
+                     
                 );
               } else if (snapshot.hasError) {
                 return const Text('Error loading home data');

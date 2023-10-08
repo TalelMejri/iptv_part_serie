@@ -12,7 +12,7 @@ class AssetsManager {
 
   // static const String bgDetailsMusic = "${Environment.assetsImagesPath}music_bg.jpg";
 
-  static const String progressGif = "${Environment.assetsImagesPath}progress_img.gif";
+  static const String progressGif = "${Environment.assetsImagesPath}bg_series.jpg";
 
 
 }
