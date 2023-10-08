@@ -385,7 +385,6 @@ class _SeriesHomeViewState extends State<SeriesHomeView> {
                                           width: Get.width * 0.3,
                                           child: ClipRRect(
                                             child: Stack(
-                                              fit: StackFit.expand,
                                               children: [
                                                 Image.asset(
                                                   AssetsManager.alphaLogo,
@@ -393,6 +392,7 @@ class _SeriesHomeViewState extends State<SeriesHomeView> {
                                                 ),
                                                 Image.network(
                                                   slider.icon,
+                                                  width: 700,
                                                   fit: BoxFit.fill,
                                                 ),
                                                 Container(
@@ -405,9 +405,7 @@ class _SeriesHomeViewState extends State<SeriesHomeView> {
                                                       color: ColorManager
                                                           .selectedNavBarItem,
                                                     ),
-                                                    margin: EdgeInsets.only(
-                                                      top: Get.height * .04,
-                                                    ),
+                                                  
                                                     padding:
                                                         const EdgeInsets.all(2),
                                                     child: Text(
@@ -812,3 +810,4 @@ class _SeriesHomeViewState extends State<SeriesHomeView> {
     super.dispose();
   }
 }
+
