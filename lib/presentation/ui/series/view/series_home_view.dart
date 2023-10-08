@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:iptv_part/presentation/resources/values_manager.dart';
 import '../../../../domain/models/route_screen_model.dart';
 import '../../../../domain/responses/category_response.dart';
 import '../../../../domain/responses/serie_response.dart';
@@ -375,7 +376,9 @@ class _SeriesHomeViewState extends State<SeriesHomeView> {
                                     ),
                                     child: Column(
                                       children: [
-                                        Container(
+                                        Expanded(
+                                          flex: 6,
+                                          child: Container(
                                           decoration: BoxDecoration(
                                             color: _selectedSliderIndex == index
                                                 ? null
@@ -395,33 +398,34 @@ class _SeriesHomeViewState extends State<SeriesHomeView> {
                                                   width: 700,
                                                   fit: BoxFit.fill,
                                                 ),
-                                                Container(
+                                                Positioned(
+                                                  top: 0,
+                                                  right: 0,
+                                                  child: 
+                                                 Container(
                                                     decoration: BoxDecoration(
-                                                      borderRadius:
-                                                          const BorderRadius
-                                                              .all(
-                                                              Radius.circular(
-                                                                  5)),
-                                                      color: ColorManager
-                                                          .selectedNavBarItem,
+                                                      color: ColorManager.black,
+                                                      borderRadius: const BorderRadius.only(bottomLeft: Radius.circular(15))
                                                     ),
-                                                  
                                                     padding:
-                                                        const EdgeInsets.all(2),
+                                                        const EdgeInsets.all(AppPadding.p8),
                                                     child: Text(
                                                       yearOfMovie,
-                                                      style: getRegularStyle(
+                                                      style: getBoldStyle(
                                                         color:
                                                             ColorManager.white,
-                                                        fontSize: FontSize.s12,
+                                                        fontSize: FontSize.s18,
                                                       ),
                                                     ),
+                                                  ),
                                                   ),
                                               ],
                                             ),
                                           ),
+                                        )
                                         ),
                                         Expanded(
+                                          flex:2,
                                           child: Stack(
                                             alignment: Alignment.center,
                                             children: [
@@ -429,7 +433,7 @@ class _SeriesHomeViewState extends State<SeriesHomeView> {
                                                 child: Text(
                                                   slider.name,
                                                   overflow: TextOverflow.clip,
-                                                  maxLines: 1,
+                                                  maxLines: 2,
                                                   style: TextStyle(
                                                     fontSize: FontSize.s14,
                                                     color:
@@ -442,8 +446,6 @@ class _SeriesHomeViewState extends State<SeriesHomeView> {
                                                   ),
                                                 ),
                                               ),
-                                            
-                                                
                                             ],
                                           ),
                                         ),
@@ -618,15 +620,21 @@ class _SeriesHomeViewState extends State<SeriesHomeView> {
                                                   _menuChosenValues);
                                             },
                                             child: Container(
-                                              margin: EdgeInsets.only(
-                                                bottom: Get.height * .07,
-                                              ),
-                                              color: _selectedFilterIndex ==
+                                              decoration: BoxDecoration(
+                                                borderRadius: const BorderRadius.all(
+                                                  Radius.circular(15)
+                                                ),
+                                                 color: _selectedFilterIndex ==
                                                       AppConstants
                                                           .menusFilterKey.length
                                                   ? ColorManager
                                                       .selectedNavBarItem
                                                   : ColorManager.white,
+                                              ),
+                                              margin: EdgeInsets.only(
+                                                bottom: Get.height * .07,
+                                              ),
+                                           
                                               width: Get.width*0.2,
                                               height: Get.height * .1,
                                               child: Center(
@@ -640,7 +648,7 @@ class _SeriesHomeViewState extends State<SeriesHomeView> {
                                                           ? ColorManager.white
                                                           : ColorManager
                                                               .darkPrimary,
-                                                      fontSize: FontSize.s22),
+                                                      fontSize: FontSize.s18),
                                                 ),
                                               ),
                                             ),

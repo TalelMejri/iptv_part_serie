@@ -56,6 +56,7 @@ class _FilterWidgetState extends State<FilterWidget> {
             top: widget.marginVertical,
             right: widget.marginHorizontal,
           ),
+         
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
